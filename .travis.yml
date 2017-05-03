@@ -4,15 +4,33 @@ language: java
 jdk:
   - oraclejdk8
 
+notification:
+  email:
+    recipients:
+      - syhily@gmail.com
+    on_success: always
+    on_failure: always
+
+before_install:
+  - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
 after_success:
   - bash .travis_after_success.sh
 
 cache:
   directories:
-    - $HOME/.m2
+    - "$HOME/.m2/repository"
 
-# Use updated jdk version instead of buggy default
+env:
+  global:
+   - secure: "yG19ZtbsDBLTeq6VSC/kf7JjrpQK8+mhUtVwT8epOxssgR0r60ePt8UqKilLXgsmiPYf9OgjT8qJ6paawd7fhIaWvpSZ4ss9TbJ8rFwKqFRrCIf/9f+P1uB3uJbqw+BCBKrYAiC4lZlDDvLRrO/fGpZXq1/pBRNuRwemhYZE+wcCVKELOO4UWDmVnDlGJ354VU8OJOQtmLcx0oKhEpDJ2spPj0zJdAZDcXuLixaNmIhRj1qJ4jU4b0qkdO8L0vvoh8fRO/C3DoJjUCbgiEAO9YGd9TuUvtPaEZK/CyFWG4aYAC68gRP9PgxDLfN6ubN7bsPLrM3oPCr7PDeGaLt0F70xVxLhzyvUWsNUJLDj0WaZ2W6rn0eqRBChRsKoE4mQMVVbEgEDQKGKPtUU7pkeErmAqFmbTejY+Ydu20C4DVtjE8yyeyQ0N1c+KJgcfYfL6nncmj913/12T5seCX20qhHPWFksION84K9QZq2XbmDlhYldeU8jqY0NPY8JGihjMpqgdioI7Y3Ow3mrYfFqgF0RY7odsrEmZEsvfO8yxex5JDXqaQbfk23BVHRg3Tjo7jwnuxRqnJ3CrS8poMFezPcxGRKHY6O9cUpSuzO+y/BDes0lnwwf8BK4VNAISOwOXEqUv3K1ngKSlCSSoV2fdXpSXa2MtVnzozMZHdR+tEM="
+
 addons:
-  apt:
-    packages:
-      - oracle-java8-installer
+  coverity_scan:
+    project:
+      name: "syhily/gossip"
+      description: "Build submitted via Travis CI"
+    notification_email: syhily@gmail.com
+    build_command_prepend: "mvn clean"
+    build_command: "mvn -DskipTests=true compile"
+    branch_pattern: master
