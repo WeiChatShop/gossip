@@ -4,6 +4,7 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/58d7ec64dcaf9e0041b5c019/badge.svg?style=flat)](https://www.versioneye.com/user/projects/58d7ec64dcaf9e0041b5c019)
 [![Coverage Status](https://coveralls.io/repos/github/syhily/gossip/badge.svg?branch=master&service=github)](https://coveralls.io/github/syhily/gossip?branch=master)
 [![Code Climate](https://codeclimate.com/github/syhily/gossip/badges/gpa.svg)](https://codeclimate.com/github/syhily/gossip)
+[![Coverity Scan Build Status](https://scan.coverity.com/projects/12608/badge.svg)](https://scan.coverity.com/projects/syhily-gossip)
 [![License](https://img.shields.io/:license-mit-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 [Hompage](https://syhily.github.io/gossip)

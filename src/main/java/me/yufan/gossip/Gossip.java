@@ -43,9 +43,23 @@ public class Gossip {
             server.setPort(port);
             server.setRootResourcePath(rootResourcePath);
             server.start();
+            shutdownHook();
         } else {
             throw new GossipInitializeException("The gossip server is already started, check the author's shit logic code");
         }
+    }
+
+    private void shutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(Gossip.this::stop));
+    }
+
+    private void stop() {
+        try {
+            server.stop();
+        } catch (Exception e) {
+            log.error("Server stop error", e);
+        }
+        log.info("Successfully shutdown gossip system.");
     }
 
     public static void main(@NonNull String[] args) {
